@@ -1,0 +1,75 @@
+name: sros_bngt
+
+mgmt:
+  network: bngt
+  ipv4-subnet: 172.21.20.0/24
+
+topology:
+  nodes:
+ 
+    agg:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: sr-1
+      license: srsim-lic-25.txt
+      startup-config: configs/ne/agg.txt
+      mgmt-ipv4: 172.21.20.21
+      group: ne   
+    bng1:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: sr-1s
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.21.20.11
+      startup-config: configs/ne/bng1.txt 
+      group: ne     
+    bng2:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: sr-1s
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.21.20.12
+      startup-config: configs/ne/bng2.txt
+      group: ne
+    core:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: sr-1s
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.21.20.22
+      startup-config: configs/ne/core.txt
+      group: ne
+    
+
+    radius:
+      kind: linux
+      image: freeradius/freeradius-server:3.2.3
+      cmd: -X
+      mgmt-ipv4: 172.21.20.111
+      binds:
+        - configs/radius/raddb/clients.conf:/etc/raddb/clients.conf
+        - configs/radius/raddb/mods-config/files/authorize:/etc/raddb/mods-config/files/authorize
+        - logs/radius:/var/log/radius
+      startup-delay: 10
+      restart-policy: unless-stopped
+
+
+    bngblaster:
+      kind: linux
+      image: azyablov/bng-blaster:latest
+      binds:
+        - configs/bngblaster/pppoe.json:/pppoe.json
+      startup-delay: 10
+      restart-policy: unless-stopped
+
+
+  links:
+    - endpoints: ["bngblaster:eth1", "agg:1/1/c1/1"]
+    - endpoints: ["bng1:1/1/c1/1", "agg:1/1/c2/1"]
+    - endpoints: ["bng2:1/1/c1/1", "agg:1/1/c3/1"]
+    - endpoints: ["bng1:1/1/c2/1", "core:1/1/c1/1"]
+    - endpoints: ["bng2:1/1/c2/1", "core:1/1/c2/1"]
+    - endpoints: ["bng1:1/1/c3/1", "bng2:1/1/c3/1"]
+    - endpoints: ["bngblaster:eth2", "core:1/1/c3/1"]
+    - endpoints: ["radius:eth1", "core:1/1/c4/1"]
+
