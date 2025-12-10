@@ -78,7 +78,7 @@ configure {
             }
         }
         syslog "promtail" {
-            address 172.18.0.100
+            address 172.18.0.101
             facility local7
             severity info
             port 1514
