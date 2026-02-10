@@ -1,0 +1,109 @@
+name: telco
+
+mgmt:
+  network: telco
+  ipv4-subnet: 172.23.20.0/24
+
+topology:
+  nodes:
+ 
+    sr-2se-1:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: sr-2se
+      startup-config: config/sr-2se-1-a-config.cfg
+      components:
+        - slot: A
+          type: cpm-2se
+          sfm: sfm-2se
+        - slot: B
+          type: cpm-2se
+        - slot: 1
+          type: xcm-2se
+          xiom:
+            - slot: 1
+              type: x2-s36-400g-qsfp112-3.0t
+              mda:  
+                - slot: 1
+                  type: m36-400g-qsfp112               
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.23.20.101
+
+    sr-2se-2:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      startup-config: config/sr-2se-2-a-config.cfg
+      type: sr-2se 
+      components:
+        - slot: A
+          type: cpm-2se
+          sfm: sfm-2se
+        - slot: B
+          type: cpm-2se
+        - slot: 1
+          type: xcm-2se
+          xiom:
+            - slot: 1
+              type: x2-s36-400g-qsfp112-3.0t
+              mda:  
+                - slot: 1
+                  type: m36-400g-qsfp112           
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.23.20.102
+
+    ixr-s-3:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: ixr-s
+      components:
+        - slot: A
+        - slot: 1
+          type: cpm-ixr-s 
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.23.20.104        
+
+    ixr-e2-11:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: ixr-e2
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.23.20.11   
+
+
+    ixr-e2-12:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: ixr-e2
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.23.20.12   
+
+    ixr-e2-21:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: ixr-e2
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.23.20.21   
+
+    ixr-e2-22:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      type: ixr-e2
+      license: srsim-lic-25.txt
+      mgmt-ipv4: 172.23.20.22        
+
+  links:
+    # 
+    - endpoints: ["sr-2se-1:1/x1/1/c1/1", "sr-2se-2:1/x1/1/c1/1"]
+    - endpoints: ["sr-2se-1:1/x1/1/c2/1", "sr-2se-2:1/x1/1/c2/1"]
+    - endpoints: ["ixr-e2-11:1/1/c1/1", "ixr-e2-12:1/1/c1/1"]
+    - endpoints: ["ixr-e2-11:1/1/c2/1", "ixr-e2-12:1/1/c2/1"]    
+    - endpoints: ["ixr-e2-21:1/1/c1/1", "ixr-e2-22:1/1/c1/1"]
+    - endpoints: ["ixr-e2-21:1/1/c2/1", "ixr-e2-22:1/1/c2/1"] 
+
+    # 
+    - endpoints: ["ixr-e2-12:1/1/c3/1", "sr-2se-1:1/x1/1/c3/1"]
+    - endpoints: ["ixr-e2-12:1/1/c4/1", "sr-2se-1:1/x1/1/c4/1"]
+    - endpoints: ["ixr-e2-22:1/1/c3/1", "sr-2se-2:1/x1/1/c3/1"]
+    - endpoints: ["ixr-e2-22:1/1/c4/1", "sr-2se-2:1/x1/1/c4/1"]
+    - endpoints: ["ixr-s-3:1/1/1", "sr-2se-1:1/x1/1/c5/1"]
+    - endpoints: ["ixr-s-3:1/1/2", "sr-2se-1:1/x1/1/c5/2"]
