@@ -1,0 +1,70 @@
+{
+  "freeTextAnnotations": [],
+  "freeShapeAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "sr-2se-1",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 77,
+        "y": 7
+      }
+    },
+    {
+      "id": "sr-2se-2",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 133,
+        "y": 7
+      }
+    },
+    {
+      "id": "ixr-s-3",
+      "interfacePattern": "1/1/c{n}/1"
+    },
+    {
+      "id": "ixr-e2-11",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 7,
+        "y": 63
+      }
+    },
+    {
+      "id": "ixr-e2-12",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 35,
+        "y": 119
+      }
+    },
+    {
+      "id": "ixr-e2-21",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 133,
+        "y": 119
+      }
+    },
+    {
+      "id": "ixr-e2-22",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 175,
+        "y": 63
+      }
+    },
+    {
+      "id": "ostinato",
+      "position": {
+        "x": 91,
+        "y": 77
+      }
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
+}
