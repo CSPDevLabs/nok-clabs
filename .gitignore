@@ -1,7 +1,6 @@
 /logs/**
 **/license.txt
-clab-sros_bngt/
-.bngt.clab.yaml.bak
+clab-telco/
 lokidata/*
 promdata/*
 .TODO.md
@@ -9,4 +8,4 @@ promdata/*
 *.tar
 *.gz
 *lic*.txt
-clab-sros-bngt
+clab-telco
