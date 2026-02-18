@@ -1,0 +1,57 @@
+{
+  "freeTextAnnotations": [],
+  "freeShapeAnnotations": [],
+  "groupStyleAnnotations": [],
+  "networkNodeAnnotations": [],
+  "nodeAnnotations": [
+    {
+      "id": "agg",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": -35,
+        "y": 63
+      }
+    },
+    {
+      "id": "bng1",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 35,
+        "y": 91
+      }
+    },
+    {
+      "id": "bng2",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 35,
+        "y": 35
+      }
+    },
+    {
+      "id": "core",
+      "interfacePattern": "1/1/c{n}/1",
+      "position": {
+        "x": 105,
+        "y": 63
+      }
+    },
+    {
+      "id": "bngblaster",
+      "position": {
+        "x": 35,
+        "y": -7
+      }
+    },
+    {
+      "id": "radius",
+      "position": {
+        "x": 105,
+        "y": 119
+      }
+    }
+  ],
+  "edgeAnnotations": [],
+  "aliasEndpointAnnotations": [],
+  "viewerSettings": {}
+}

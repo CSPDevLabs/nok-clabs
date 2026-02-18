@@ -6,6 +6,8 @@ promdata/*
 .TODO.md
 *.bak
 *.tar
+*.tgz
 *.gz
 *lic*.txt
-clab-telco
+clab-sros-bngt/
+
