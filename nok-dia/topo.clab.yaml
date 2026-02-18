@@ -1,7 +1,7 @@
-name: telco
+name: nok-dia
 
 mgmt:
-  network: telco
+  network: nok-dia
   ipv4-subnet: 172.23.20.0/24
 
 
