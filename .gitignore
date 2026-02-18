@@ -1,11 +1,13 @@
 /logs/**
 **/license.txt
-clab-sros_bngt/
-.bngt.clab.yaml.bak
+clab-nok-dia/
 lokidata/*
 promdata/*
 .TODO.md
 *.bak
 *.tar
+*.tgz
 *.gz
 *lic*.txt
+clab-sros-bngt/
+
