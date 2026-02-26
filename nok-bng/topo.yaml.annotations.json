@@ -8,46 +8,46 @@
       "id": "agg",
       "interfacePattern": "1/1/c{n}/1",
       "position": {
-        "x": -35,
-        "y": 63
+        "x": -120,
+        "y": 60
       }
     },
     {
       "id": "bng1",
       "interfacePattern": "1/1/c{n}/1",
       "position": {
-        "x": 35,
-        "y": 91
+        "x": 40,
+        "y": 100
       }
     },
     {
       "id": "bng2",
       "interfacePattern": "1/1/c{n}/1",
       "position": {
-        "x": 35,
-        "y": 35
+        "x": 40,
+        "y": 20
       }
     },
     {
       "id": "core",
       "interfacePattern": "1/1/c{n}/1",
       "position": {
-        "x": 105,
-        "y": 63
+        "x": 180,
+        "y": 40
       }
     },
     {
       "id": "bngblaster",
       "position": {
-        "x": 35,
-        "y": -7
+        "x": 40,
+        "y": -80
       }
     },
     {
       "id": "radius",
       "position": {
-        "x": 105,
-        "y": 119
+        "x": 220,
+        "y": -60
       }
     }
   ],
