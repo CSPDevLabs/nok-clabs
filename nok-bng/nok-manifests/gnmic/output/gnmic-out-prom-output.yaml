@@ -1,0 +1,9 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Output
+metadata:
+  namespace: nok-bng
+  name: prom-output
+  labels:
+    type: bng-ext-output
+spec:
+  type: prometheus

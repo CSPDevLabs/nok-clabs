@@ -1,0 +1,24 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Pipeline
+metadata:
+  namespace: nok-bng
+  name: bng-ext-tel
+spec:
+  clusterRef: bng-metrics
+  enabled: true
+  # Select targets by label
+  targetSelectors:
+    - matchLabels:
+        vendor: Nokia
+        role: bng-ext
+  # Select subscriptions by label
+  subscriptionRefs:
+    - sros-router-interfaces
+    - sros-system-performance
+  # Select outputs by label
+  outputs:
+    outputSelectors:
+      - matchLabels:
+          type: bng-ext-output  
+    processorRefs:
+      - oper-state-to-int   
