@@ -7,3 +7,8 @@ metadata:
     type: bng-ext-output
 spec:
   type: prometheus
+  service:
+    annotations:
+      netopskube.io/bbm: "true"
+      netopskube.io/path: /metrics
+      netopskube.io/prober: http  
