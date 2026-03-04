@@ -1,0 +1,18 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Subscription
+metadata:
+  namespace: nok-bng
+  name: sros-sub-mgmt-subscribers-sample
+  labels:
+    type: bng
+spec:
+  paths:
+    - "/state/subscriber-mgmt/subscriber[subscriber-id=*]/sla-profile-instance[id=*]/session[id=*][type=ppp]/ipv4/ip-address/address"
+    - "/state/subscriber-mgmt/subscriber[subscriber-id=*]/sla-profile-instance[id=*]/session[id=*][type=ppp]/ipv6/dhcp6-lease/client-address"
+    - "/state/subscriber-mgmt/subscriber[subscriber-id=*]/sla-profile-instance[id=*]/session[id=*][type=ppp]/ipv6/pd/ip-prefix/prefix"
+    - "/state/subscriber-mgmt/subscriber[subscriber-id=*]/sla-profile-instance[id=*]/session[id=*][type=ppp]/ipv6/slaac/address"
+    - "/state/service/vprn[service-name=BNG-INTERNET]/subscriber-interface[interface-name=SUB]/group-interface[group-interface-name=GRP_1]/srrp[srrp-id=*]/oper-state"
+    - "/state/service/vprn[service-name=BNG-INTERNET]/subscriber-interface[interface-name=SUB]/group-interface[group-interface-name=GRP_1]/srrp[srrp-id=*]/master-since"
+  mode: STREAM/SAMPLE
+  encoding: JSON
+  sampleInterval: 10s 

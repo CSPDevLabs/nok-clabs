@@ -1,0 +1,19 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Processor
+metadata:
+  namespace: nok-bng
+  name: oper-state-to-int
+spec:
+  type: event-strings
+  config:
+    value-names:
+      - ".*"
+    transforms:
+      - replace:
+          apply-on: "value"
+          old: "up"
+          new: "1" 
+      - replace:
+          apply-on: "value"
+          old: "down"
+          new: "0"  

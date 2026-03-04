@@ -1,0 +1,17 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Subscription
+metadata:
+  namespace: nok-bng
+  name: sros-fp-sub-mgmt-resources
+  labels:
+    type: bng
+spec:
+  paths:
+    - /state/card[slot-number=1]/fp[fp-number=1]/resource-usage/egress-queues
+    - /state/card[slot-number=1]/fp[fp-number=1]/resource-usage/ingress-queues
+    - /state/card[slot-number=1]/fp[fp-number=1]/resource-usage/ingress-policers
+    - /state/card[slot-number=1]/fp[fp-number=1]/resource-usage/egress-policers
+    - /state/card[slot-number=1]/mda[mda-slot=1]/resource-usage/sap-instances
+  mode: STREAM/SAMPLE
+  encoding: JSON
+  sampleInterval: 10s  
