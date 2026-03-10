@@ -24,6 +24,12 @@ spec:
     server:
       root_url: "http://bng.nok.local:8080/grafana"
 
+  service:
+    metadata:
+      annotations:
+        netopskube.io/bbm: "true"
+        netopskube.io/prober: http  
+
   deployment:
     spec:
       template:
