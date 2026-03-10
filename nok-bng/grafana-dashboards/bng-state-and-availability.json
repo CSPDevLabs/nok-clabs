@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 0,
   "links": [],
   "panels": [
     {
@@ -766,8 +766,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 16,
+        "h": 9,
+        "w": 24,
         "x": 0,
         "y": 25
       },
@@ -802,121 +802,12 @@
       "type": "logs"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "index": 0,
-                  "text": "UP"
-                },
-                "!=0": {
-                  "index": 1,
-                  "text": "DOWN"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 16,
-        "y": 25
-      },
-      "id": 1,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "smokeping_send_errors_total{host=\"clab-sros-bngt-bng1\"}",
-          "format": "time_series",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "interval": "",
-          "legendFormat": "{{host}}",
-          "range": false,
-          "refId": "BNG1 MGMT Inf",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "smokeping_send_errors_total{host=\"clab-sros-bngt-bng2\"}",
-          "format": "time_series",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": true,
-          "legendFormat": "{{host}}",
-          "range": false,
-          "refId": "BNG2 MGMT Inf",
-          "useBackend": false
-        }
-      ],
-      "title": "Node Availability (MGMT)",
-      "type": "stat"
-    },
-    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 34
       },
       "id": 24,
       "panels": [],
@@ -988,7 +879,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 34
+        "y": 35
       },
       "id": 2,
       "options": {
@@ -1091,7 +982,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 34
+        "y": 35
       },
       "id": 3,
       "options": {
@@ -1172,10 +1063,113 @@
         ]
       },
       "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 35
+      },
+      "id": 9,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "disableTextWrap": false,
+          "editorMode": "code",
+          "expr": "state_subscriber_mgmt_statistics_total_hosts_peak_value{total_hosts_counter=\"ipv4\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "legendFormat": "{{source}} {{total_hosts_counter}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "disableTextWrap": false,
+          "editorMode": "code",
+          "expr": "state_subscriber_mgmt_statistics_total_hosts_peak_value{total_hosts_counter=\"ipv6\"}",
+          "fullMetaSearch": false,
+          "hide": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{source}} {{total_hosts_counter}}",
+          "range": true,
+          "refId": "B",
+          "useBackend": false
+        }
+      ],
+      "title": "Peak IPv4 / IPv6 hosts",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "{__name__=\"state_subscriber_mgmt_statistics_total_hosts_peak_value\", instance=\"host.docker.internal:9274\", job=\"sros_bngt_gnmic\", source=~\".*bngt-bng1\", subscription_name=~\".*sros-sub-mgmt-statistics\", total_hosts_counter=\"ipv4\"}"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": []
+          }
+        ]
+      },
+      "gridPos": {
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 34
+        "y": 43
       },
       "id": 8,
       "options": {
@@ -1293,7 +1287,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 43
+        "y": 44
       },
       "id": 13,
       "options": {
@@ -1396,7 +1390,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 43
+        "y": 44
       },
       "id": 14,
       "options": {
@@ -1445,109 +1439,6 @@
       ],
       "title": "Igress / Egress Policers allocated, %",
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "{__name__=\"state_subscriber_mgmt_statistics_total_hosts_peak_value\", instance=\"host.docker.internal:9274\", job=\"sros_bngt_gnmic\", source=~\".*bngt-bng1\", subscription_name=~\".*sros-sub-mgmt-statistics\", total_hosts_counter=\"ipv4\"}"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": []
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 16,
-        "y": 43
-      },
-      "id": 9,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "12.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "state_subscriber_mgmt_statistics_total_hosts_peak_value{total_hosts_counter=\"ipv4\"}",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "legendFormat": "{{source}} {{total_hosts_counter}}",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "disableTextWrap": false,
-          "editorMode": "code",
-          "expr": "state_subscriber_mgmt_statistics_total_hosts_peak_value{total_hosts_counter=\"ipv6\"}",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "{{source}} {{total_hosts_counter}}",
-          "range": true,
-          "refId": "B",
-          "useBackend": false
-        }
-      ],
-      "title": "Peak IPv4 / IPv6 hosts",
-      "type": "gauge"
     },
     {
       "datasource": {
@@ -1614,7 +1505,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 51
+        "y": 52
       },
       "id": 7,
       "options": {
@@ -1717,7 +1608,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 51
+        "y": 52
       },
       "id": 12,
       "options": {
@@ -1833,7 +1724,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 51
+        "y": 52
       },
       "id": 5,
       "options": {
@@ -1876,7 +1767,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 59
+        "y": 60
       },
       "id": 26,
       "panels": [],
@@ -1946,10 +1837,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 16,
+        "h": 9,
+        "w": 24,
         "x": 0,
-        "y": 60
+        "y": 61
       },
       "id": 22,
       "options": {
@@ -2042,9 +1933,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 16,
+        "w": 24,
         "x": 0,
-        "y": 68
+        "y": 70
       },
       "id": 27,
       "options": {
@@ -2137,9 +2028,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 16,
+        "w": 24,
         "x": 0,
-        "y": 76
+        "y": 78
       },
       "id": 23,
       "options": {
@@ -2231,10 +2122,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 16,
+        "h": 7,
+        "w": 24,
         "x": 0,
-        "y": 84
+        "y": 86
       },
       "id": 28,
       "options": {
@@ -2306,5 +2197,5 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "BNG State and Resource Availability",
-  "version": 1
+  "version": 2
 }
