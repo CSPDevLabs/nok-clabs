@@ -36,6 +36,85 @@
             "mode": "absolute",
             "steps": [
               {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "blue",
+                "value": ""
+              },
+              {
+                "color": "red",
+                "value": 50
+              },
+              {
+                "color": "yellow",
+                "value": 99
+              },
+              {
+                "color": "green",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "DS_PROMETHEUS"
+          },
+          "expr": "",
+          "instant": false,
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "DS_PROMETHEUS"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
                 "color": "dark-blue",
                 "value": 0
               }
@@ -48,7 +127,7 @@
         "h": 4,
         "w": 8,
         "x": 0,
-        "y": 0
+        "y": 5
       },
       "id": 5,
       "options": {
@@ -114,7 +193,7 @@
         "h": 4,
         "w": 8,
         "x": 8,
-        "y": 0
+        "y": 5
       },
       "id": 4,
       "options": {
@@ -180,7 +259,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 0
+        "y": 5
       },
       "id": 3,
       "options": {
@@ -247,7 +326,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 9
       },
       "id": 2,
       "options": {
@@ -320,7 +399,7 @@
         "h": 4,
         "w": 8,
         "x": 0,
-        "y": 12
+        "y": 17
       },
       "id": 6,
       "options": {
@@ -386,7 +465,7 @@
         "h": 4,
         "w": 8,
         "x": 8,
-        "y": 12
+        "y": 17
       },
       "id": 7,
       "options": {
@@ -452,7 +531,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 12
+        "y": 17
       },
       "id": 8,
       "options": {
@@ -524,7 +603,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 21
       },
       "id": 1,
       "options": {
@@ -583,6 +662,5 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "SDCIO Config Management",
-  "version": 24
+  "title": "SDCIO Config Management"
 }
