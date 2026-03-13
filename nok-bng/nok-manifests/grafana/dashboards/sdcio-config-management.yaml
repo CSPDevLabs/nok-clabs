@@ -1,0 +1,10 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: sdcio-config-management
+  namespace: nok-bng
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  url: "https://raw.githubusercontent.com/CSPDevLabs/nok-clabs/refs/heads/main/nok-bng/grafana-dashboards/sdcio-config-management.json"
