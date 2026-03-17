@@ -57,6 +57,7 @@ topology:
     bngblaster:
       kind: linux
       image: azyablov/bng-blaster:latest
+      mgmt-ipv4: 172.21.20.112
       binds:
         - configs/bngblaster/pppoe.json:/pppoe.json
       startup-delay: 10
