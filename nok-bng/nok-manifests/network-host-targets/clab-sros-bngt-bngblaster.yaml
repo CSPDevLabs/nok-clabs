@@ -1,0 +1,11 @@
+apiVersion: nok.dev/v1alpha1
+kind: NetworkHostTarget
+metadata:
+  name: clab-sros-bngt-bngblaster
+  namespace: nok-bng
+spec:
+  address: 172.21.20.112
+  hostname: clab-sros-bngt-bngblaster
+  commonLabels:
+    role: bngblaster
+    environment: production
