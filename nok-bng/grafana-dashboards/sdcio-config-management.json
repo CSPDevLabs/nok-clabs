@@ -61,7 +61,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
+        "h": 8,
         "w": 24,
         "x": 0,
         "y": 0
@@ -71,7 +71,7 @@
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
-        "orientation": "auto",
+        "orientation": "vertical",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
@@ -91,10 +91,41 @@
             "type": "prometheus",
             "uid": "DS_PROMETHEUS"
           },
-          "expr": "",
-          "instant": false,
-          "range": true,
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(network_device_gnmic_enabled)",
+          "instant": true,
+          "legendFormat": "gnmic enabled",
+          "range": false,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "DS_PROMETHEUS"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(network_device_sdcio_enabled)",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "sdcio enabled",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "DS_PROMETHEUS"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(network_device_reachability)/count(network_device_reachability)*100",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Reachable [%]",
+          "range": false,
+          "refId": "C"
         }
       ],
       "title": "",
@@ -124,10 +155,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 8,
         "x": 0,
-        "y": 5
+        "y": 8
       },
       "id": 5,
       "options": {
@@ -190,10 +221,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 8,
         "x": 8,
-        "y": 5
+        "y": 8
       },
       "id": 4,
       "options": {
@@ -256,10 +287,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 8,
         "x": 16,
-        "y": 5
+        "y": 8
       },
       "id": 3,
       "options": {
@@ -326,7 +357,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 14
       },
       "id": 2,
       "options": {
@@ -396,10 +427,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 8,
         "x": 0,
-        "y": 17
+        "y": 22
       },
       "id": 6,
       "options": {
@@ -462,10 +493,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 8,
         "x": 8,
-        "y": 17
+        "y": 22
       },
       "id": 7,
       "options": {
@@ -528,10 +559,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 6,
         "w": 8,
         "x": 16,
-        "y": 17
+        "y": 22
       },
       "id": 8,
       "options": {
@@ -603,7 +634,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 28
       },
       "id": 1,
       "options": {
