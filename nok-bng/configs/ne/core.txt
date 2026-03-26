@@ -247,6 +247,9 @@ configure {
         }
     }
     service {
+        customer "1" {
+            customer-id 1
+        }
         vprn "INTERNET" {
             admin-state enable
             service-id 100

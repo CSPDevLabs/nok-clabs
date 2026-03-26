@@ -366,6 +366,9 @@ configure {
         }
     }
     service {
+        customer "1" {
+            customer-id 1
+        }
         system {
             bgp-auto-rd-range {
                 ip-address 10.0.0.2
