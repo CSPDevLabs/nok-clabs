@@ -1,0 +1,23 @@
+apiVersion: config.sdcio.dev/v1alpha1
+kind: ConfigSet
+metadata:
+  name: sdcio-configset-bng-role-vprn
+  namespace: nok-bng
+spec:
+  target:
+    targetSelector:
+      matchLabels:
+        sdcio.dev/role: bng
+  priority: 10
+  revertive: False
+  config:
+  - path: /configure/service
+    value:
+      customer:
+        customer-name: "CUST-10060"
+        customer-id: 10060     
+      vprn:
+        service-name: "VPRN-DATA-10060"
+        customer: "CUST-10060"
+        service-id: 10060
+        admin-state: "enable"
