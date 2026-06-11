@@ -173,7 +173,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "label_replace(\n  absent_over_time(state_system_cpu_summary_usage_cpu_time{source=~\".*bngt-bng1\"}[$__interval]),\n  \"source\", \"nok-bng/clab-sros-bngt-bng1\", \"\", \"\"\n)\nor\ncount by (source) (state_system_cpu_summary_usage_cpu_time{source=~\".*bngt-bng1\"}) * 0",
+          "expr": "label_replace(\n  absent_over_time(\n    {__name__=~\"state_system_cpu_summary_usage_cpu_time|state_system_resource_usage_subscriber_next_hop_entries_total|state_router_interface_statistics_ip_in_octets\", source=~\".*bngt-bng1\"}[$__interval]\n  ),\n  \"source\", \"nok-bng/clab-sros-bngt-bng1\", \"\", \"\"\n)\nor\ncount by (source) (\n  {__name__=~\"state_system_cpu_summary_usage_cpu_time|state_system_resource_usage_subscriber_next_hop_entries_total|state_router_interface_statistics_ip_in_octets\", source=~\".*bngt-bng1\"}\n) * 0",
           "legendFormat": "{{source}}",
           "range": true,
           "refId": "A",
@@ -188,7 +188,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "label_replace(\n  absent_over_time(state_system_cpu_summary_usage_cpu_time{source=~\".*bngt-bng2\"}[$__interval]),\n  \"source\", \"nok-bng/clab-sros-bngt-bng2\", \"\", \"\"\n)\nor\ncount by (source) (state_system_cpu_summary_usage_cpu_time{source=~\".*bngt-bng2\"}) * 0",
+          "expr": "label_replace(\n  absent_over_time(\n    {__name__=~\"state_system_cpu_summary_usage_cpu_time|state_system_resource_usage_subscriber_next_hop_entries_total|state_router_interface_statistics_ip_in_octets\", source=~\".*bngt-bng2\"}[$__interval]\n  ),\n  \"source\", \"nok-bng/clab-sros-bngt-bng2\", \"\", \"\"\n)\nor\ncount by (source) (\n  {__name__=~\"state_system_cpu_summary_usage_cpu_time|state_system_resource_usage_subscriber_next_hop_entries_total|state_router_interface_statistics_ip_in_octets\", source=~\".*bngt-bng2\"}\n) * 0",
           "hide": false,
           "legendFormat": "{{source}}",
           "range": true,
@@ -200,7 +200,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "label_replace(\n  absent_over_time(state_system_cpu_summary_usage_cpu_time{source=~\".*bngt-agg\"}[$__interval]),\n  \"source\", \"nok-bng/clab-sros-bngt-agg\", \"\", \"\"\n)\nor\ncount by (source) (state_system_cpu_summary_usage_cpu_time{source=~\".*bngt-agg\"}) * 0",
+          "expr": "label_replace(\n  absent_over_time(\n    {__name__=~\"state_system_cpu_summary_usage_cpu_time|state_system_resource_usage_subscriber_next_hop_entries_total|state_router_interface_statistics_ip_in_octets\", source=~\".*bngt-agg\"}[$__interval]\n  ),\n  \"source\", \"nok-bng/clab-sros-bngt-agg\", \"\", \"\"\n)\nor\ncount by (source) (\n  {__name__=~\"state_system_cpu_summary_usage_cpu_time|state_system_resource_usage_subscriber_next_hop_entries_total|state_router_interface_statistics_ip_in_octets\", source=~\".*bngt-agg\"}\n) * 0",
           "hide": false,
           "legendFormat": "{{source}}",
           "range": true,
@@ -212,11 +212,24 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "label_replace(\n  absent_over_time(state_system_cpu_summary_usage_cpu_time{source=~\".*bngt-core\"}[$__interval]),\n  \"source\", \"nok-bng/clab-sros-bngt-core\", \"\", \"\"\n)\nor\ncount by (source) (state_system_cpu_summary_usage_cpu_time{source=~\".*bngt-core\"}) * 0",
+          "expr": "label_replace(\n  absent_over_time(\n    {__name__=~\"state_system_cpu_summary_usage_cpu_time|state_system_resource_usage_subscriber_next_hop_entries_total|state_router_interface_statistics_ip_in_octets\", source=~\".*bngt-core\"}[$__interval]\n  ),\n  \"source\", \"nok-bng/clab-sros-bngt-core\", \"\", \"\"\n)\nor\ncount by (source) (\n  {__name__=~\"state_system_cpu_summary_usage_cpu_time|state_system_resource_usage_subscriber_next_hop_entries_total|state_router_interface_statistics_ip_in_octets\", source=~\".*bngt-core\"}\n) * 0",
           "hide": false,
           "legendFormat": "{{source}}",
           "range": true,
           "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "E"
         }
       ],
       "title": "Unavailability Heatmap",
@@ -2283,14 +2296,14 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "BNG State and Resource Availability",
   "uid": "5796f395-1615-4eac-b3d0-d0fdd9aec59d",
-  "version": 2,
+  "version": 6,
   "weekStart": "",
   "id": null
 }
