@@ -13,7 +13,7 @@ spec:
     type: prometheus
     uid: DS_PROMETHEUS
     access: proxy
-    url: http://prometheus-operated:9090
+    url: http://prometheus-operated.nok-bng.svc.cluster.local:9090
     jsonData:
       httpMethod: POST
       timeout: 60
