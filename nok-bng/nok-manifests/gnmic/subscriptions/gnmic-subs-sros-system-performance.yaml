@@ -13,4 +13,5 @@ spec:
     - /state/system/memory-pools/summary/total-in-use
   mode: STREAM/SAMPLE
   encoding: JSON
-  sampleInterval: 10s
+  sampleInterval: 60s
+  heartbeatInterval: 90s

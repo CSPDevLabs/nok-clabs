@@ -12,4 +12,5 @@ spec:
     - /state/subscriber-mgmt/statistics/total-hosts[counter=ipv6]
   mode: STREAM/SAMPLE
   encoding: JSON
-  sampleInterval: 10s
+  sampleInterval: 60s
+  heartbeatInterval: 90s
