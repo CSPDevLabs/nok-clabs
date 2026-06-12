@@ -14,4 +14,5 @@ spec:
     - /state/service/vprn[service-name=BNG-INTERNET]/subscriber-interface[interface-name=SUB]/group-interface[group-interface-name=GRP_1]/srrp[srrp-id=1]/statistics/become-non-master
   mode: STREAM/SAMPLE
   encoding: JSON
-  sampleInterval: 10s 
+  sampleInterval: 60s
+  heartbeatInterval: 90s

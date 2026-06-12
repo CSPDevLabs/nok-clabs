@@ -14,4 +14,5 @@ spec:
     - /state/card[slot-number=1]/mda[mda-slot=1]/resource-usage/sap-instances
   mode: STREAM/SAMPLE
   encoding: JSON
-  sampleInterval: 10s  
+  sampleInterval: 60s
+  heartbeatInterval: 90s

@@ -10,4 +10,5 @@ spec:
     - /state/system/resource-usage/subscriber-next-hop-entries
   mode: STREAM/SAMPLE
   encoding: JSON
-  sampleInterval: 10s  
+  sampleInterval: 60s
+  heartbeatInterval: 90s
