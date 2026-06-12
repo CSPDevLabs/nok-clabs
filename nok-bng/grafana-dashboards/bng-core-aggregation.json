@@ -426,10 +426,13 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "text": "nok-bng/clab-sros-bngt-core",
+          "value": "nok-bng/clab-sros-bngt-core"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "DS_PROMETHEUS"
         },
         "definition": "label_values(source)",
         "name": "router",
@@ -445,9 +448,8 @@
       },
       {
         "current": {
-          "text": "",
-          "value": "${DS_PROMETHEUS}",
-          "selected": true
+          "text": "Prometheus",
+          "value": "DS_PROMETHEUS"
         },
         "label": "DS_PROMETHEUS",
         "name": "DS_PROMETHEUS",
