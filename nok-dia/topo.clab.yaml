@@ -87,12 +87,10 @@ topology:
       startup-config: config/ixr-e2-22.cfg
       mgmt-ipv4: 172.23.20.22        
 
-    ostinato:
+    traffic-gen:
       kind: linux
-      image: ostinato/ostinato:v1.3.0-1
-      ports:
-        - 5900:5900/tcp
-        - 7878:7878/tcp
+      mgmt-ipv4: 172.23.20.32
+      image: ghcr.io/srl-labs/network-multitool
 
   links:
     # SR-2se links
@@ -110,10 +108,10 @@ topology:
     - endpoints: ["ixr-s-3:1/1/1", "sr-2se-1:1/x1/1/c5/1"]
     - endpoints: ["ixr-s-3:1/1/2", "sr-2se-1:1/x1/1/c5/2"]
 
-    # Ostinato links
-    - endpoints: ["ostinato:eth1", "sr-2se-1:1/x1/1/c10/1"]
-    - endpoints: ["ostinato:eth2", "sr-2se-2:1/x1/1/c10/1"]
-    - endpoints: ["ostinato:eth3", "ixr-e2-11:1/1/c10/1"]
-    - endpoints: ["ostinato:eth4", "ixr-e2-12:1/1/c10/1"]
-    - endpoints: ["ostinato:eth5", "ixr-e2-21:1/1/c10/1"]
-    - endpoints: ["ostinato:eth6", "ixr-e2-22:1/1/c10/1"]
+    # traffic-gen links
+    - endpoints: ["traffic-gen:eth1", "sr-2se-1:1/x1/1/c10/1"]
+    - endpoints: ["traffic-gen:eth2", "sr-2se-2:1/x1/1/c10/1"]
+    - endpoints: ["traffic-gen:eth4", "ixr-e2-11:1/1/c10/1"]
+    - endpoints: ["traffic-gen:eth5", "ixr-e2-12:1/1/c10/1"]
+    - endpoints: ["traffic-gen:eth6", "ixr-e2-21:1/1/c10/1"]
+    - endpoints: ["traffic-gen:eth7", "ixr-e2-22:1/1/c10/1"]
