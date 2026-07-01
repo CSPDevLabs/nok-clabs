@@ -16,7 +16,7 @@ topology:
     sr-2se-1:
       kind: nokia_srsim
       type: sr-2se
-      startup-config: config/sr-2se-1-a-config.cfg
+      startup-config: configs/sr-2se-1-a-config.cfg
       components:
         - slot: A
           type: cpm-2se
@@ -35,7 +35,7 @@ topology:
 
     sr-2se-2:
       kind: nokia_srsim
-      startup-config: config/sr-2se-2-a-config.cfg
+      startup-config: configs/sr-2se-2-a-config.cfg
       type: sr-2se 
       components:
         - slot: A
@@ -66,25 +66,25 @@ topology:
     ixr-e2-11:
       kind: nokia_srsim
       type: ixr-e2
-      startup-config: config/ixr-e2-11.cfg
+      startup-config: configs/ixr-e2-11.cfg
       mgmt-ipv4: 172.23.20.11   
 
     ixr-e2-12:
       kind: nokia_srsim
       type: ixr-e2
-      startup-config: config/ixr-e2-12.cfg
+      startup-config: configs/ixr-e2-12.cfg
       mgmt-ipv4: 172.23.20.12   
 
     ixr-e2-21:
       kind: nokia_srsim
       type: ixr-e2
-      startup-config: config/ixr-e2-21.cfg
+      startup-config: configs/ixr-e2-21.cfg
       mgmt-ipv4: 172.23.20.21   
 
     ixr-e2-22:
       kind: nokia_srsim
       type: ixr-e2
-      startup-config: config/ixr-e2-22.cfg
+      startup-config: configs/ixr-e2-22.cfg
       mgmt-ipv4: 172.23.20.22        
 
     traffic-gen:
@@ -92,9 +92,9 @@ topology:
       mgmt-ipv4: 172.23.20.32
       image: ghcr.io/srl-labs/network-multitool
       binds:
-        - ./config:/config
+        - ./configs:/configs
       exec:
-        - bash /config/config-server.sh     
+        - bash /configs/config-server.sh     
 
   links:
     # SR-2se links
