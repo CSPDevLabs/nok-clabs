@@ -91,6 +91,10 @@ topology:
       kind: linux
       mgmt-ipv4: 172.23.20.32
       image: ghcr.io/srl-labs/network-multitool
+      binds:
+        - ./config:/config
+      exec:
+        - bash /config/config-server.sh     
 
   links:
     # SR-2se links

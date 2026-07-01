@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Configuration
-SERVERS=("ns_eth1:1.1.1.11:5211" "ns_eth2:1.1.1.12:5212")
+SERVERS=("ns_eth1:1.1.1.11:5211")
+#SERVERS=("ns_eth1:1.1.1.11:5211" "ns_eth2:1.1.1.12:5212")
 CLIENTS=("ns_eth4" "ns_eth5" "ns_eth6" "ns_eth7")
 
 # Standardized variables
