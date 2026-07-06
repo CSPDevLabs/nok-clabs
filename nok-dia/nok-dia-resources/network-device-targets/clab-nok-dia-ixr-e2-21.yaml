@@ -1,0 +1,29 @@
+apiVersion: nok.dev/v1alpha1
+kind: NetworkDeviceTarget
+metadata:
+  name: clab-nok-dia-ixr-e2-21
+  namespace: nok-dia
+spec:
+  address: 172.23.20.21
+  hostname: clab-nok-dia-ixr-e2-21
+  commonLabels:
+    vendor: Nokia
+    environment: production
+  sdcio:
+    enabled: true
+    credentialsSecretRef: device-credentials
+    connectionProfileRef: gnmi-skipverify
+    syncProfileRef: gnmi-get
+    schema:
+      provider: sros.nokia.sdcio.dev
+      version: B-25.10.R1
+    labels:
+      sdcio.dev/region: us-central
+      sdcio.dev/role: dia
+  gnmic:
+    enabled: true
+    credentialsSecretRef: device-credentials
+    targetProfileRef: default-profile
+    port: "57400"
+    labels:
+      role: dia

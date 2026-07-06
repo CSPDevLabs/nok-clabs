@@ -51,5 +51,12 @@ ip netns exec ns_eth7 ip link set lo up
 
 # 5. Start iperf3 servers in background daemon mode inside their namespaces
 # Binding to the specific IP ensures it only listens on that interface
-ip netns exec ns_eth1 iperf3 -s -B 1.1.1.11 -p 5211 -D
+ip netns exec ns_eth1 iperf3 -s -B 1.1.1.11 -p 5214 -D
+sleep 1
+ip netns exec ns_eth1 iperf3 -s -B 1.1.1.11 -p 5215 -D
+sleep 1
+ip netns exec ns_eth1 iperf3 -s -B 1.1.1.11 -p 5216 -D
+sleep 1
+ip netns exec ns_eth1 iperf3 -s -B 1.1.1.11 -p 5217 -D
+sleep 1
 #ip netns exec ns_eth2 iperf3 -s -B 1.1.1.12 -p 5212 -D

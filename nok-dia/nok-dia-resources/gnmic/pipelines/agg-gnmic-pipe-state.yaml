@@ -1,0 +1,20 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Pipeline
+metadata:
+  namespace: nok-dia
+  name: agg-gnmic-pipe-state
+spec:
+  clusterRef: dia-state
+  enabled: true
+  targetSelectors:
+    - matchLabels:
+        vendor: Nokia
+  subscriptionSelectors:
+    - matchLabels:
+        type: systemDetails
+  outputs:
+    outputSelectors:
+      - matchLabels:
+          type: dia-state  
+    processorRefs:
+      - oper-state-to-int            

@@ -1,30 +1,38 @@
 #!/bin/bash
 
 # Configuration
-SERVERS=("ns_eth1:1.1.1.11:5211")
-#SERVERS=("ns_eth1:1.1.1.11:5211" "ns_eth2:1.1.1.12:5212")
+SERVERS=(
+  "ns_eth1:1.1.1.11:5214"
+  "ns_eth1:1.1.1.11:5215"
+  "ns_eth1:1.1.1.11:5216"
+  "ns_eth1:1.1.1.11:5217"
+)
 CLIENTS=("ns_eth4" "ns_eth5" "ns_eth6" "ns_eth7")
 
 # Standardized variables
-DURATION=60
+DURATION=1800
 PARALLEL=4
 WINDOW="4K"
 MSS=1400
 
 start_traffic() {
     echo "Starting iperf3 traffic..."
-    for client in "${CLIENTS[@]}"; do
-        for server in "${SERVERS[@]}"; do
-            IFS=':' read -r _ SERVER_IP PORT <<< "$server"
-            echo "  - Launching: $client -> $SERVER_IP:$PORT"
-            
-            # Using timeout to ensure cleanup, backgrounding with &
-            docker exec -d clab-nok-dia-traffic-gen ip netns exec "$client" \
-                timeout $((DURATION + 5)) \
-                iperf3 -c "$SERVER_IP" -p "$PORT" -t "$DURATION" \
-                -P "$PARALLEL" -w "$WINDOW" -M "$MSS" --connect-timeout 5000 \
-                > /dev/null 2>&1
-        done
+    
+    # Loop using array indices to map clients to servers 1-to-1
+    for i in "${!CLIENTS[@]}"; do
+        client="${CLIENTS[$i]}"
+        server="${SERVERS[$i]}"
+        
+        IFS=':' read -r _ SERVER_IP PORT <<< "$server"
+        echo " - Launching: $client -> $SERVER_IP:$PORT"
+        
+        # Using timeout to ensure cleanup, backgrounding with &
+        docker exec -d clab-nok-dia-traffic-gen ip netns exec "$client" \
+            timeout $((DURATION + 5)) \
+            iperf3 -c "$SERVER_IP" -p "$PORT" -t "$DURATION" \
+            -P "$PARALLEL" -w "$WINDOW" -M "$MSS" --connect-timeout 5000 \
+            > /dev/null 2>&1
+        sleep 1    
     done
 }
 
@@ -46,9 +54,15 @@ if [ "$#" -ne 1 ]; then
 fi
 
 case "$1" in
-    start) start_traffic ;;
-    stop)  stop_traffic ;;
-    *)     usage ;;
+    start)
+        start_traffic
+        ;;
+    stop)
+        stop_traffic
+        ;;
+    *)
+        usage
+        ;;
 esac
 
 echo "Operation complete."
