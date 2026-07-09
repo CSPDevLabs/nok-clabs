@@ -40,7 +40,13 @@ spec:
                 failureThreshold: 3
               env:
                 - name: GF_INSTALL_PLUGINS
-                  value: "andrewbmchugh-flow-panel"                  
+                  value: "andrewbmchugh-flow-panel"  
+                - name: HTTP_PROXY
+                  value: "http://proxy.lbs.alcatel-lucent.com:8000"
+                - name: HTTPS_PROXY
+                  value: "http://proxy.lbs.alcatel-lucent.com:8000"
+                - name: NO_PROXY
+                  value: "127.0.0.1,localhost,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,10.96.0.0/12,10.244.0.0/16,gitea.nok.local,.nok.local,.svc,.svc.cluster.local,bbm-grafana-svc,bbm-grafana-svc.nok-bbm,bbm-grafana-svc.nok-bbm.svc,bbm-grafana-svc.nok-bbm.svc.cluster.local,bbm-prometheus-svc,bbm-prometheus-svc.nok-bbm,bbm-prometheus-svc.nok-bbm.svc,bbm-prometheus-svc.nok-bbm.svc.cluster.local"                
           volumes:
             - name: grafana-data
               persistentVolumeClaim:

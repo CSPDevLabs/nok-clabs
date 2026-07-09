@@ -5,39 +5,34 @@ mgmt:
   ipv4-subnet: 172.21.20.0/24
 
 topology:
+  kinds:
+    nokia_srsim:
+      image: nokia_srsim:25.10.R2
+      license: srsim-lic-25.txt
   nodes:
- 
     agg:
       kind: nokia_srsim
-      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
       type: sr-1
-      license: srsim-lic-25.txt
-      startup-config: configs/ne/agg.txt
+      startup-config: configs/ne/agg.partial.txt
       mgmt-ipv4: 172.21.20.21
       group: ne   
     bng1:
       kind: nokia_srsim
-      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
       type: sr-1s
-      license: srsim-lic-25.txt
       mgmt-ipv4: 172.21.20.11
-      startup-config: configs/ne/bng1.txt 
+      startup-config: configs/ne/bng1.partial.txt 
       group: ne     
     bng2:
       kind: nokia_srsim
-      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
       type: sr-1s
-      license: srsim-lic-25.txt
       mgmt-ipv4: 172.21.20.12
-      startup-config: configs/ne/bng2.txt
+      startup-config: configs/ne/bng2.partial.txt
       group: ne
     core:
       kind: nokia_srsim
-      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
       type: sr-1s
-      license: srsim-lic-25.txt
       mgmt-ipv4: 172.21.20.22
-      startup-config: configs/ne/core.txt
+      startup-config: configs/ne/core.partial.txt
       group: ne
     
 
