@@ -1,0 +1,19 @@
+apiVersion: config.sdcio.dev/v1alpha1
+kind: Config
+metadata:
+  name: ixr-e2-11-port-1-1-c10-sros
+  namespace: nok-dia
+  labels:
+    config.sdcio.dev/targetName: clab-nok-dia-ixr-e2-11
+    config.sdcio.dev/targetNamespace: nok-dia
+spec:
+  priority: 10
+  revertive: true
+  config:
+  - path: /configure
+    value:
+      port:
+        port-id: "1/1/c10"
+        admin-state: "enable"
+        connector:
+          breakout: "c1-25g"

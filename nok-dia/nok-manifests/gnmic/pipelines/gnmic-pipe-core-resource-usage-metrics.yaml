@@ -1,0 +1,20 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Pipeline
+metadata:
+  namespace: nok-dia
+  name: gnmic-pipe-core-resource-usage-metrics
+spec:
+  clusterRef: dia-core-metrics
+  enabled: true
+  targetSelectors:
+    - matchLabels:
+        type: core
+  subscriptionSelectors:
+    - matchLabels:
+        type: resource-usage-sr
+  outputs:
+    outputSelectors:
+      - matchLabels:
+          type: dia-ext-output  
+    processorRefs:
+      - oper-state-to-int              

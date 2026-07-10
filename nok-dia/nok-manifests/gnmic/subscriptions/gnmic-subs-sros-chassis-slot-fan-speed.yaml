@@ -1,0 +1,13 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Subscription
+metadata:
+  namespace: nok-dia
+  name: sros-chassis-slot-fan-speed
+  labels:
+    type: dia
+spec:
+  paths:
+    - /state/chassis[chassis-class=*][chassis-number=*]/fan[fan-slot=*]/speed
+  mode: STREAM/SAMPLE
+  encoding: JSON
+  sampleInterval: 60s
