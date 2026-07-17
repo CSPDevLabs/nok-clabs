@@ -4,7 +4,7 @@ metadata:
   namespace: nok-dia
   name: sros-fp-resource-usage-sr
   labels:
-    type: resource-usage-sr
+    type: core
 spec:
   paths:
     - /state/card[slot-number=1]/fp[fp-number=1]/resource-usage/egress-queues

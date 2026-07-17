@@ -4,7 +4,7 @@ metadata:
   namespace: nok-dia
   name: sros-ipv6-routes-stats
   labels:
-    type: rt-stats
+    type: core
 spec:
   paths:
     - /state/router[router-name=*]/route-table/unicast/ipv6/statistics/bgp/active-routes

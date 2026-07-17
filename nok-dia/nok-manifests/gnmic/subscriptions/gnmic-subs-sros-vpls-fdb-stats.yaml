@@ -4,7 +4,7 @@ metadata:
   namespace: nok-dia
   name: sros-vpls-fdb-stats
   labels:
-    type: vpls-fdb
+    type: core
 spec:
   paths:
     - /state/service/statistics/vpls-fdb/entries-allocated
