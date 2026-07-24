@@ -1,0 +1,10 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: sdcio-config-management
+  namespace: nok-dia
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  url: "http://gitea-http.nok-git.svc.cluster.local:3000/nok/grafana-dashboards/raw/branch/main/sdcio-config-management.json"
