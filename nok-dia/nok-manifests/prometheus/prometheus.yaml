@@ -25,5 +25,5 @@ spec:
   resources:
     requests:
       memory: 400Mi
-  externalUrl: /prometheus
+  externalUrl: /nok-dia/prometheus
   routePrefix: /
