@@ -22,7 +22,7 @@ spec:
       org_role: "Admin"
 
     server:
-      root_url: "http://bng.nok.local:8080/grafana"
+      root_url: "http://bng.nok.local:8080/nok-bng/grafana"
 
   service:
     metadata:
