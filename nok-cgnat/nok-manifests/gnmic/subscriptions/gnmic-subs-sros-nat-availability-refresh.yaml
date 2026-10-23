@@ -1,0 +1,13 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: Subscription
+metadata:
+  namespace: nok-cgnat
+  name: sros-nat-availability-refresh
+  labels:
+    type: cgnat
+spec:
+  paths:
+    - /state/isa/nat-group[id=*]/oper-state
+  mode: POLL
+  encoding: JSON
+  sampleInterval: 60s
