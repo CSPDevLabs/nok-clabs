@@ -1,15 +1,15 @@
 apiVersion: inv.sdcio.dev/v1alpha1
 kind: Schema
 metadata:
-  name: sros.nokia.sdcio.dev-25.10.1
+  name: sros.nokia.sdcio.dev-26.7.1
   namespace: nok-cgnat
 spec:
   provider: sros.nokia.sdcio.dev
-  version: B-25.10.R1
+  version: B-26.7.R1
   repositories:
   - repoURL: https://github.com/nokia/7x50_YangModels
     kind: tag
-    ref: sros_25.10.r1
+    ref: sros_26.7.r1
     dirs:
     - src: YANG
       dst: .

@@ -2,7 +2,7 @@
 
 MD-CLI in `configs/ne/` follows the DS-Lite AFTR + stateful inter-chassis redundancy
 (SICR) intent from the 26.7 MD-CLI note, with digital-twin addresses from the
-CG-NAT lab design. Lab image is `nokia_srsim:25.10.R1`; XPaths and log IDs are 26.7.
+CG-NAT lab design. Lab image, XPaths, and log IDs are SR OS 26.7.R1.
 
 This lab uses the **Base-router** NAT variant (MD-CLI note §7) so the digital twin
 comes up on SRSIM without a full BGP-VPN. The same NAT policy, pool, DS-Lite
@@ -14,12 +14,12 @@ not a lab dump. This recipe implements the DS-Lite + stateful ICR + syslog slice
 
 ## Building blocks
 
-1. **ESA-VM BB** (`esa 1` / `vm 1`) as the NAT member. SRSIM cannot take `isa2-bb`
-   MDAs; `active-mda-limit 1` matches the single VM (SICR forbids mixing intra-chassis
-   MDA spare with inter-chassis sync). The VM defaults to **admin disable** — the
-   startup-config must set `admin-state enable` on `esa 1 vm 1`. Host-ports need a
-   cable (topo `esa-stub`) plus hybrid/dot1q/802.1X tunneling or ESA stays
-   `provisioned` / health Unknown and the NAT group stays `transition`.
+1. **ISA2-BB MDA** (`1/2`) on an SR-1e `iom-e` line card. Each NAT router has
+   a CPM container and a slot-1 IOM container sharing its network namespace.
+   MDA 1 is `me6-10gb-sfp+`; MDA 2 is `isa2-bb`; `active-mda-limit 1` matches
+   the single NAT adapter. SR-SIM 26.7 supports ISA2-BB on this profile. The IOM
+   container is required for the adapter to become equipped and operational;
+   a Linux ESA cable peer does not provide ESA compute resources.
 2. **ISA nat-group 1** with `redundancy inter-chassis` enabled: keepalive 30/3,
    replication-threshold 50, flow-timeout-on-switchover 50, ip-mtu 9000,
    `local-ip-range-start` / `remote-ip-range-start` swapped on the peer,
@@ -33,13 +33,17 @@ not a lab dump. This recipe implements the DS-Lite + stateful ICR + syslog slice
    MD-CLI note, `flow-log-policy syslog "dslite-syslog"`.
 6. **Inside DS-Lite** AFTR endpoint `2001:db8:1::1` (VRRP on ACCESS),
    subscriber-prefix-length **128**, tunnel-mtu 1500, reassembly false,
-   min-first-fragment-size-rx 1280.
+   min-first-fragment-size-rx 1280. IPv6 VRRP uses explicit ACCESS link-local
+   addresses (`fe80::2` / `fe80::3`), virtual link-local address `fe80::1`, and
+   enabled router advertisements with the virtual MAC.
 7. **Syslog split:** CPM NAT events on **local5** (`log-id 50`, filter application
    NAT); ISA per-flow records on **local6**. Event severities raised for 2025 /
    2037 / 2003; LSN subscriber watermarks 2026–2029 throttled.
 
 cgnat1 and cgnat2 share the pool and AFTR address; SICR elects the active group.
-Equal health uses `preferred true` on cgnat1.
+Equal health uses `preferred true` on cgnat1. The core advertises INET into
+IS-IS as passive; both ICL sync routes and NAT-pool return next hops are
+explicitly enabled because SR OS otherwise leaves the next hops disabled.
 
 ## Addressing (digital twin)
 
@@ -57,7 +61,7 @@ Equal health uses `preferred true` on cgnat1.
 
 ## Not in this lab image
 
-- Hardware `imm-2pc-fp3` / `isa2-bb` MDA option (MD-CLI §1.A) — ESA only.
+- Hardware `imm-2pc-fp3` / `isa2-bb` MDA option (MD-CLI §1.A) — deployed as an equipped ISA2-BB MDA, not an ESA stub.
 - Inside/outside VPRNs 550/500 with BGP-VPN (MD-CLI §4–5) — Base NAT instead.
 - DHCPv6 option 64 AFTR-Name server (MD-CLI §6) — B4s use static WAN IPv6 plus
   `dhclient -6` if a server appears.

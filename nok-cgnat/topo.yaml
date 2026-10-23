@@ -9,36 +9,72 @@ topology:
 
     cgnat1:
       kind: nokia_srsim
-      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
-      type: sr-1s
-      license: srsim-lic-25.txt
+      image: registry.srlinux.dev/pub/nokia_srsim:26.7.R1
+      type: sr-1
+      env:
+        NOKIA_SROS_CHASSIS: sr-1e
+        NOKIA_SROS_SYSTEM_BASE_MAC: "1c:93:01:00:00:00"
+      license: srsim-lic-26.7.txt
       mgmt-ipv4: 172.21.30.11
       startup-config: configs/ne/cgnat1.txt
       group: ne
 
+    cgnat1-iom:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:26.7.R1
+      type: sr-1
+      network-mode: container:cgnat1
+      env:
+        NOKIA_SROS_CHASSIS: sr-1e
+        NOKIA_SROS_SLOT: "1"
+        NOKIA_SROS_CARD: iom-e
+        NOKIA_SROS_MDA_1: me6-10gb-sfp+
+        NOKIA_SROS_MDA_2: isa2-bb
+        NOKIA_SROS_SYSTEM_BASE_MAC: "1c:93:01:00:00:00"
+      license: srsim-lic-26.7.txt
+      group: ne-component
+
     cgnat2:
       kind: nokia_srsim
-      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
-      type: sr-1s
-      license: srsim-lic-25.txt
+      image: registry.srlinux.dev/pub/nokia_srsim:26.7.R1
+      type: sr-1
+      env:
+        NOKIA_SROS_CHASSIS: sr-1e
+        NOKIA_SROS_SYSTEM_BASE_MAC: "1c:93:02:00:00:00"
+      license: srsim-lic-26.7.txt
       mgmt-ipv4: 172.21.30.12
       startup-config: configs/ne/cgnat2.txt
       group: ne
 
+    cgnat2-iom:
+      kind: nokia_srsim
+      image: registry.srlinux.dev/pub/nokia_srsim:26.7.R1
+      type: sr-1
+      network-mode: container:cgnat2
+      env:
+        NOKIA_SROS_CHASSIS: sr-1e
+        NOKIA_SROS_SLOT: "1"
+        NOKIA_SROS_CARD: iom-e
+        NOKIA_SROS_MDA_1: me6-10gb-sfp+
+        NOKIA_SROS_MDA_2: isa2-bb
+        NOKIA_SROS_SYSTEM_BASE_MAC: "1c:93:02:00:00:00"
+      license: srsim-lic-26.7.txt
+      group: ne-component
+
     core:
       kind: nokia_srsim
-      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      image: registry.srlinux.dev/pub/nokia_srsim:26.7.R1
       type: sr-1
-      license: srsim-lic-25.txt
+      license: srsim-lic-26.7.txt
       mgmt-ipv4: 172.21.30.21
       startup-config: configs/ne/core.txt
       group: ne
 
     agg:
       kind: nokia_srsim
-      image: registry.srlinux.dev/pub/nokia_srsim:25.10.R1
+      image: registry.srlinux.dev/pub/nokia_srsim:26.7.R1
       type: sr-1
-      license: srsim-lic-25.txt
+      license: srsim-lic-26.7.txt
       mgmt-ipv4: 172.21.30.13
       startup-config: configs/ne/agg.txt
       group: ne
@@ -125,21 +161,10 @@ topology:
       startup-delay: 25
       restart-policy: unless-stopped
 
-    # Dummy peers so ESA host-ports get a physical link. SR-SIM ESA stays
-    # "provisioned / health Unknown" when 1/1/c4 and 1/1/c5 have no cable.
-    esa-stub:
-      kind: linux
-      image: ghcr.io/srl-labs/network-multitool
-      mgmt-ipv4: 172.21.30.141
-      binds:
-        - configs/hosts/esa-stub.sh:/startup.sh
-      cmd: 'sh -c "/startup.sh; exec sleep infinity"'
-      restart-policy: unless-stopped
-
   links:
     # Access dual-home via L2 aggregation (CPEs + both CG-NATs)
-    - endpoints: ["cgnat1:1/1/c1/1", "agg:1/1/c1/1"]
-    - endpoints: ["cgnat2:1/1/c1/1", "agg:1/1/c2/1"]
+    - endpoints: ["cgnat1-iom:1/1/1", "agg:1/1/c1/1"]
+    - endpoints: ["cgnat2-iom:1/1/1", "agg:1/1/c2/1"]
     - endpoints: ["cpe1:eth1", "agg:1/1/c3/1"]
     - endpoints: ["cpe2:eth1", "agg:1/1/c4/1"]
     - endpoints: ["cpe3:eth1", "agg:1/1/c5/1"]
@@ -148,13 +173,8 @@ topology:
     - endpoints: ["lan2:eth1", "cpe2:eth2"]
     - endpoints: ["lan3:eth1", "cpe3:eth2"]
     # Core / public IPv4
-    - endpoints: ["cgnat1:1/1/c2/1", "core:1/1/c1/1"]
-    - endpoints: ["cgnat2:1/1/c2/1", "core:1/1/c2/1"]
+    - endpoints: ["cgnat1-iom:1/1/2", "core:1/1/c1/1"]
+    - endpoints: ["cgnat2-iom:1/1/2", "core:1/1/c2/1"]
     - endpoints: ["inet:eth1", "core:1/1/c3/1"]
     # Inter-chassis link (CPM MCS + ISA-to-ISA flow sync)
-    - endpoints: ["cgnat1:1/1/c3/1", "cgnat2:1/1/c3/1"]
-    # ESA host-ports (must be hybrid/dot1q in startup-config; need a peer for link-up)
-    - endpoints: ["cgnat1:1/1/c4/1", "esa-stub:eth1"]
-    - endpoints: ["cgnat1:1/1/c5/1", "esa-stub:eth2"]
-    - endpoints: ["cgnat2:1/1/c4/1", "esa-stub:eth3"]
-    - endpoints: ["cgnat2:1/1/c5/1", "esa-stub:eth4"]
+    - endpoints: ["cgnat1-iom:1/1/3", "cgnat2-iom:1/1/3"]

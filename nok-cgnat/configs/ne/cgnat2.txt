@@ -3,32 +3,12 @@
 
 configure {
     card 1 {
-        card-type xcm-1s
+        card-type iom-e
         mda 1 {
-            mda-type s36-100gb-qsfp28
+            mda-type me6-10gb-sfp+
         }
-    }
-    chassis router chassis-number 1 {
-        power-shelf 1 {
-            power-shelf-type ps-a4-shelf-dc
-            power-module 1 { power-module-type ps-a-dc-6000 }
-            power-module 2 { power-module-type ps-a-dc-6000 }
-            power-module 3 { power-module-type ps-a-dc-6000 }
-            power-module 4 { power-module-type ps-a-dc-6000 }
-        }
-    }
-    esa 1 {
-        admin-state enable
-        host-port 1/1/c4/1 {
-        }
-        host-port 1/1/c5/1 {
-        }
-        vm 1 {
-            admin-state enable
-            vm-type bb
-            cores 4
-            memory 8
-            host-port 1/1/c5/1
+        mda 2 {
+            mda-type isa2-bb
         }
     }
     isa {
@@ -58,7 +38,7 @@ configure {
                     low 80
                 }
             }
-            esa 1 vm 1 { }
+            mda 1/2 { }
         }
     }
     log {
@@ -105,66 +85,26 @@ configure {
             }
         }
     }
-    port 1/1/c1 {
-        admin-state enable
-        connector { breakout c1-100g }
-    }
-    port 1/1/c1/1 {
+    port 1/1/1 {
         admin-state enable
         ethernet {
             mode network
             encap-type null
         }
     }
-    port 1/1/c2 {
-        admin-state enable
-        connector { breakout c1-100g }
-    }
-    port 1/1/c2/1 {
+    port 1/1/2 {
         admin-state enable
         ethernet {
             mode network
             encap-type null
         }
     }
-    port 1/1/c3 {
-        admin-state enable
-        connector { breakout c1-100g }
-    }
-    port 1/1/c3/1 {
+    port 1/1/3 {
         admin-state enable
         ethernet {
             mode network
             encap-type null
             mtu 9000
-        }
-    }
-    port 1/1/c4 {
-        admin-state enable
-        connector { breakout c1-100g }
-    }
-    port 1/1/c4/1 {
-        admin-state enable
-        ethernet {
-            mode hybrid
-            encap-type dot1q
-            dot1x {
-                tunneling true
-            }
-        }
-    }
-    port 1/1/c5 {
-        admin-state enable
-        connector { breakout c1-100g }
-    }
-    port 1/1/c5/1 {
-        admin-state enable
-        ethernet {
-            mode hybrid
-            encap-type dot1q
-            dot1x {
-                tunneling true
-            }
         }
     }
     redundancy {
@@ -187,15 +127,19 @@ configure {
         autonomous-system 65001
         interface "ACCESS" {
             admin-state enable
-            port 1/1/c1/1
+            port 1/1/1
             ipv6 {
+                link-local-address {
+                    address fe80::3
+                    duplicate-address-detection false
+                }
                 address 2001:db8:1::3 {
                     prefix-length 64
                     duplicate-address-detection false
                 }
                 vrrp 1 {
                     admin-state enable
-                    backup [2001:db8:1::1]
+                    backup [fe80::1 2001:db8:1::1]
                     priority 100
                     ping-reply true
                 }
@@ -203,7 +147,7 @@ configure {
         }
         interface "OUTSIDE" {
             admin-state enable
-            port 1/1/c2/1
+            port 1/1/2
             ipv4 {
                 primary {
                     address 192.0.2.5
@@ -213,7 +157,7 @@ configure {
         }
         interface "ICL" {
             admin-state enable
-            port 1/1/c3/1
+            port 1/1/3
             ipv4 {
                 primary {
                     address 10.255.255.2
@@ -232,7 +176,7 @@ configure {
         }
         static-routes {
             route 10.192.3.0/24 route-type unicast {
-                next-hop 10.255.255.1 { }
+                next-hop 10.255.255.1 { admin-state enable }
             }
         }
         isis 0 {
@@ -242,6 +186,14 @@ configure {
             interface "OUTSIDE" { interface-type point-to-point }
             interface "ICL" { interface-type point-to-point }
             interface "system" { passive true }
+        }
+        ipv6 {
+            router-advertisement {
+                interface "ACCESS" {
+                    admin-state enable
+                    use-virtual-mac true
+                }
+            }
         }
         nat {
             inside {

@@ -205,7 +205,7 @@
     },
     {
       "id": 6,
-      "title": "B4 flows value/max (ESA)",
+      "title": "B4 flows value/max (MDA)",
       "type": "timeseries",
       "gridPos": {
         "h": 8,
@@ -219,7 +219,7 @@
       },
       "targets": [
         {
-          "expr": "state_isa_nat_group_esa_resources_flows_value",
+          "expr": "state_isa_nat_group_mda_resources_flows_value",
           "legendFormat": "{{source}} value",
           "refId": "A",
           "datasource": {
@@ -228,7 +228,7 @@
           }
         },
         {
-          "expr": "state_isa_nat_group_esa_resources_flows_max",
+          "expr": "state_isa_nat_group_mda_resources_flows_max",
           "legendFormat": "{{source}} max",
           "refId": "B",
           "datasource": {
@@ -317,7 +317,7 @@
       },
       "targets": [
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_flow_new_flow[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_flow_new_flow[5m])",
           "legendFormat": "{{source}} new-flow",
           "refId": "A",
           "datasource": {
@@ -326,7 +326,7 @@
           }
         },
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_flow_found_flow[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_flow_found_flow[5m])",
           "legendFormat": "{{source}} found-flow",
           "refId": "B",
           "datasource": {
@@ -335,7 +335,7 @@
           }
         },
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_dslite_forward[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_dslite_forward[5m])",
           "legendFormat": "{{source}} dslite-fwd",
           "refId": "C",
           "datasource": {
@@ -366,7 +366,7 @@
       },
       "targets": [
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_dropped_flow_creation_failed_no_resources[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_dropped_flow_creation_failed_no_resources[5m])",
           "legendFormat": "{{source}} no-resources",
           "refId": "A",
           "datasource": {
@@ -375,7 +375,7 @@
           }
         },
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_dropped_flow_creation_failed_no_ip_or_port_resources[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_dropped_flow_creation_failed_no_ip_or_port_resources[5m])",
           "legendFormat": "{{source}} no-ip-port",
           "refId": "B",
           "datasource": {
@@ -384,7 +384,7 @@
           }
         },
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_dropped_flow_creation_failed_max_flows_exceeded[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_dropped_flow_creation_failed_max_flows_exceeded[5m])",
           "legendFormat": "{{source}} max-flows",
           "refId": "C",
           "datasource": {

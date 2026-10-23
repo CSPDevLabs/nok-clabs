@@ -6,8 +6,8 @@ present in the 26.7.R1 `/state` catalogue (2,535 candidate NAT-family paths).
 This recipe does **not** invent extra XPaths and does **not** subscribe
 per-subscriber, per-port-block, or the full `dropped/**` tree.
 
-Lab image remains `nokia_srsim:25.10.R1`. 26.7 leaves that 25.10 does not
-implement stay empty.
+The lab image and YANG reference are both SR OS 26.7.R1. The selected paths are
+drawn from the 26.7.R1 state catalogue.
 
 Cadence: **60 s SAMPLE** unless noted. Availability and watermark booleans use
 **ON_CHANGE plus a 240 s SAMPLE refresh** so Prometheus always has a recent
@@ -18,7 +18,8 @@ Notation:
 | Symbol | Expands to |
 |--------|------------|
 | `NG` | `/state/isa/nat-group[id=*]` |
-| `DP` | `NG/mda[mda-id=*]` **or** `NG/esa[esa-id=*][vm=*]` (this lab uses ESA; both are subscribed) |
+| `NG1` | `/state/isa/nat-group[id=1]` (DS-Lite use-case in the three-group design) |
+| `DP` | `NG/mda[mda-id=*]` **or** `NG/esa[esa-id=*][vm=*]` (this lab uses ISA2-BB MDA `1/2`; both are subscribed) |
 | `RI` | `/state/router[router-name=*]` **or** `/state/service/vprn[service-name=*]` (this lab NATs in Base; both are subscribed) |
 
 gNMIc CRs: `nok-manifests/gnmic/subscriptions/`. Pipelines select `role: cgnat`.
@@ -62,7 +63,10 @@ on the NAT group and the pool.
 |---|-------|------|
 | C1 | `nat_flow_created_total` | `DP/statistics/nat/flow/new-flow` |
 | C2 | `nat_flow_matched_total` | `DP/statistics/nat/flow/found-flow` |
-| C3 | `nat_dslite_forwarded_total` | `DP/statistics/nat/dslite/forward` |
+| C3 | `nat_dslite_forwarded_total` | `NG1/{mda[mda-id=*],esa[esa-id=*][vm=*]}/statistics/nat/dslite/forward` |
+
+C3 is scoped to NAT group 1, the DS-Lite group. The shared C1/C2 counters remain
+group-wide.
 
 ## D. Errors (60 s)
 
@@ -82,9 +86,13 @@ policy misses are configuration.
 
 | # | Alias | Path |
 |---|-------|------|
-| E1 | `nat_fragment_dropped_total{reason}` | `DP/statistics/nat/dropped/fragments/{reassembly-failed,too-many-fragment-buffers,fragment-list-expired,too-many-fragments-per-packet}` |
-| E2 | `nat_mtu_exceeded_total` | `DP/statistics/nat/dropped/general/mtu-exceeded` |
-| E3 | `nat_fragment_buffers{direction,value,max}` | `DP/resources/fragment-bufs/{upstream,downstream}/{value,max}` |
+| E1 | `nat_fragment_dropped_total{reason}` | `NG1/{mda[mda-id=*],esa[esa-id=*][vm=*]}/statistics/nat/dropped/fragments/{fragment-list-cleanup-in-progress,fragment-list-expired,reassembly-failed,too-many-fragment-buffers,too-many-fragment-holes,too-many-fragment-lists-for-flow,too-many-fragmented-packets,too-many-fragments-per-packet}` |
+| E2 | `nat_mtu_exceeded_total` | `NG1/{mda[mda-id=*],esa[esa-id=*][vm=*]}/statistics/nat/dropped/general/mtu-exceeded` |
+| E3 | `nat_fragment_buffers{direction,value,max}` | `NG1/{mda[mda-id=*],esa[esa-id=*][vm=*]}/resources/fragment-bufs/{upstream,downstream}/{value,max}` |
+
+E1-E3 are DS-Lite softwire metrics and are scoped to NAT group 1. The eight E1
+reasons are subscribed for both the MDA and ESA datapath variants; only the
+configured datapath type is expected to return series.
 
 ## F. Redundancy
 

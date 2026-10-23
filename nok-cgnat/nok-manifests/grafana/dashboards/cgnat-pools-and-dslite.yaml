@@ -4,6 +4,8 @@ metadata:
   name: cgnat-pools-and-dslite
   namespace: nok-cgnat
 spec:
+  contentCacheDuration: 1m
+  resyncPeriod: 1m
   instanceSelector:
     matchLabels:
       dashboards: "grafana"

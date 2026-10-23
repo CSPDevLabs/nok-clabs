@@ -16,7 +16,7 @@ spec:
     syncProfileRef: gnmi-get
     schema:
       provider: sros.nokia.sdcio.dev
-      version: B-25.10.R1
+      version: B-26.7.R1
     labels:
       sdcio.dev/region: lab
       sdcio.dev/role: cgnat-core

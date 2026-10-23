@@ -82,8 +82,8 @@ configure {
         }
         static-routes {
             route 203.0.113.0/24 route-type unicast {
-                next-hop 192.0.2.1 { preference 10 }
-                next-hop 192.0.2.5 { preference 20 }
+                next-hop 192.0.2.1 { admin-state enable preference 10 }
+                next-hop 192.0.2.5 { admin-state enable preference 20 }
             }
         }
         isis 0 {
@@ -92,6 +92,7 @@ configure {
             area-address [49.0001]
             interface "TO-CGNAT1" { interface-type point-to-point }
             interface "TO-CGNAT2" { interface-type point-to-point }
+            interface "INET" { passive true }
             interface "system" { passive true }
         }
     }

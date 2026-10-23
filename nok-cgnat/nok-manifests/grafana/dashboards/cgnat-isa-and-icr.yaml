@@ -4,6 +4,8 @@ metadata:
   name: cgnat-isa-and-icr
   namespace: nok-cgnat
 spec:
+  contentCacheDuration: 1m
+  resyncPeriod: 1m
   instanceSelector:
     matchLabels:
       dashboards: "grafana"

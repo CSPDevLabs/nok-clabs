@@ -138,7 +138,7 @@
       },
       "targets": [
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_dslite_forward[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_dslite_forward[5m])",
           "legendFormat": "{{source}}",
           "refId": "A",
           "datasource": {
@@ -169,7 +169,7 @@
       },
       "targets": [
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_dropped_fragments_reassembly_failed[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_dropped_fragments_reassembly_failed[5m])",
           "legendFormat": "{{source}} reassembly",
           "refId": "A",
           "datasource": {
@@ -178,7 +178,7 @@
           }
         },
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_dropped_general_mtu_exceeded[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_dropped_general_mtu_exceeded[5m])",
           "legendFormat": "{{source}} mtu",
           "refId": "B",
           "datasource": {
@@ -209,7 +209,7 @@
       },
       "targets": [
         {
-          "expr": "state_isa_nat_group_esa_resources_fragment_bufs_upstream_value",
+          "expr": "state_isa_nat_group_mda_resources_fragment_bufs_upstream_value",
           "legendFormat": "{{source}} up value",
           "refId": "A",
           "datasource": {
@@ -218,7 +218,7 @@
           }
         },
         {
-          "expr": "state_isa_nat_group_esa_resources_fragment_bufs_upstream_max",
+          "expr": "state_isa_nat_group_mda_resources_fragment_bufs_upstream_max",
           "legendFormat": "{{source}} up max",
           "refId": "B",
           "datasource": {
@@ -227,7 +227,7 @@
           }
         },
         {
-          "expr": "state_isa_nat_group_esa_resources_fragment_bufs_downstream_value",
+          "expr": "state_isa_nat_group_mda_resources_fragment_bufs_downstream_value",
           "legendFormat": "{{source}} down value",
           "refId": "C",
           "datasource": {
@@ -258,7 +258,7 @@
       },
       "targets": [
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_flow_log_rate_limit_drop[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_flow_log_rate_limit_drop[5m])",
           "legendFormat": "{{source}} rate-limit-drop",
           "refId": "A",
           "datasource": {
@@ -267,7 +267,7 @@
           }
         },
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_flow_log_logged_flow_create[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_flow_log_logged_flow_create[5m])",
           "legendFormat": "{{source}} logged-create",
           "refId": "B",
           "datasource": {
@@ -276,7 +276,7 @@
           }
         },
         {
-          "expr": "rate(state_isa_nat_group_esa_statistics_nat_flow_log_tx_packet[1m])",
+          "expr": "rate(state_isa_nat_group_mda_statistics_nat_flow_log_tx_packet[5m])",
           "legendFormat": "{{source}} tx-packet",
           "refId": "C",
           "datasource": {
