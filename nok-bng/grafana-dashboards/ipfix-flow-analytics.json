@@ -15,6 +15,7 @@
       }
     ]
   },
+  "description": "Generic Nokia SR OS / cflowd IPFIX overview for data stored as JSONB in public.ipfix_flows (GoFlow2-style records). Filter by cluster, Kafka topic, and exporter device. Time filters use record ingestion time (created_at). Use the time picker to match when flows were written; if panels are empty, widen the range.",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
@@ -22,8 +23,264 @@
   "links": [],
   "panels": [
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "DS_IPFIX_POSTGRES"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "DS_IPFIX_POSTGRES"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS \"Flow records\"\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}));",
+          "refId": "A"
+        }
+      ],
+      "title": "Flow records",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "DS_IPFIX_POSTGRES"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "DS_IPFIX_POSTGRES"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COALESCE(SUM(NULLIF(raw_data->>'bytes', '')::BIGINT), 0) AS \"Total bytes\"\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}));",
+          "refId": "A"
+        }
+      ],
+      "title": "Total bytes (sum)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "DS_IPFIX_POSTGRES"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "orange",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "DS_IPFIX_POSTGRES"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COALESCE(SUM(NULLIF(raw_data->>'packets', '')::BIGINT), 0) AS \"Total packets\"\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}));",
+          "refId": "A"
+        }
+      ],
+      "title": "Total packets (sum)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "DS_IPFIX_POSTGRES"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "DS_IPFIX_POSTGRES"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(DISTINCT device) AS \"Exporters\"\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}));",
+          "refId": "A"
+        }
+      ],
+      "title": "Distinct exporters",
+      "type": "stat"
+    },
+    {
       "id": 1,
-      "title": "Traffic Over Time",
+      "title": "Traffic over time (bytes)",
       "type": "timeseries",
       "datasource": {
         "type": "postgres",
@@ -31,8 +288,8 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 0,
-        "w": 24,
+        "y": 4,
+        "w": 12,
         "h": 9
       },
       "pluginVersion": "12.3.3",
@@ -81,7 +338,88 @@
           "editorMode": "code",
           "format": "time_series",
           "rawQuery": true,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at, '1m'),\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS bytes,\n  SUM(COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0)) AS packets\nFROM public.ipfix_flows\nWHERE cluster_id = 'bng-1'\n  AND source_topic = 'ipfix-bng-1'\n  AND $__timeFilter(created_at)\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1\nORDER BY 1;",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at, '1m'),\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS bytes\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1\nORDER BY 1;",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [
+            "last",
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": true,
+          "mode": "multi",
+          "sort": "desc"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "Packet rate over time",
+      "type": "timeseries",
+      "datasource": {
+        "type": "postgres",
+        "uid": "DS_IPFIX_POSTGRES"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 4,
+        "w": 12,
+        "h": 9
+      },
+      "pluginVersion": "12.3.3",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "mappings": [],
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "showPoints": "never",
+            "spanNulls": true,
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "DS_IPFIX_POSTGRES"
+          },
+          "editorMode": "code",
+          "format": "time_series",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at, '1m'),\n  SUM(COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0)) / 60.0 AS packets_per_second\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1\nORDER BY 1;",
           "refId": "A"
         }
       ],
@@ -104,7 +442,7 @@
     },
     {
       "id": 2,
-      "title": "Protocol Distribution (Bytes)",
+      "title": "Protocol distribution (bytes)",
       "type": "piechart",
       "datasource": {
         "type": "postgres",
@@ -112,7 +450,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 9,
+        "y": 13,
         "w": 8,
         "h": 8
       },
@@ -133,7 +471,62 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  COALESCE(raw_data->>'proto', 'Unknown') AS protocol,\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS bytes\nFROM public.ipfix_flows\nWHERE cluster_id = 'bng-1'\n  AND source_topic = 'ipfix-bng-1'\n  AND $__timeFilter(created_at)\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1\nORDER BY bytes DESC;",
+          "rawSql": "SELECT\n  COALESCE(raw_data->>'proto', 'Unknown') AS protocol,\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS bytes\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1\nORDER BY bytes DESC;",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "desc"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "IPv4 / IPv6 (bytes)",
+      "type": "piechart",
+      "datasource": {
+        "type": "postgres",
+        "uid": "DS_IPFIX_POSTGRES"
+      },
+      "gridPos": {
+        "x": 8,
+        "y": 13,
+        "w": 8,
+        "h": 8
+      },
+      "pluginVersion": "12.3.3",
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "DS_IPFIX_POSTGRES"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  COALESCE(raw_data->>'etype', 'Unknown') AS ethertype,\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS bytes\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1\nORDER BY bytes DESC;",
           "refId": "A"
         }
       ],
@@ -159,16 +552,16 @@
     },
     {
       "id": 3,
-      "title": "Ingress / Egress Interface Traffic",
+      "title": "Ingress / egress interface traffic",
       "type": "table",
       "datasource": {
         "type": "postgres",
         "uid": "DS_IPFIX_POSTGRES"
       },
       "gridPos": {
-        "x": 8,
-        "y": 9,
-        "w": 16,
+        "x": 16,
+        "y": 13,
+        "w": 8,
         "h": 8
       },
       "pluginVersion": "12.3.3",
@@ -177,7 +570,20 @@
           "unit": "short",
           "mappings": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Bytes"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          }
+        ]
       },
       "targets": [
         {
@@ -188,7 +594,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  direction AS \"Direction\",\n  interface AS \"Interface Index\",\n  SUM(bytes) AS \"Bytes\",\n  SUM(packets) AS \"Packets\",\n  COUNT(*) AS \"Flow Records\"\nFROM (\n  SELECT\n    'Ingress' AS direction,\n    COALESCE(raw_data->>'in_if', 'Unknown') AS interface,\n    COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0) AS bytes,\n    COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0) AS packets\n  FROM public.ipfix_flows\n  WHERE cluster_id = 'bng-1'\n  AND source_topic = 'ipfix-bng-1'\n  AND $__timeFilter(created_at)\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\n  UNION ALL\n  SELECT\n    'Egress' AS direction,\n    COALESCE(raw_data->>'out_if', 'Unknown') AS interface,\n    COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0) AS bytes,\n    COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0) AS packets\n  FROM public.ipfix_flows\n  WHERE cluster_id = 'bng-1'\n  AND source_topic = 'ipfix-bng-1'\n  AND $__timeFilter(created_at)\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\n) interface_traffic\nGROUP BY direction, interface\nORDER BY \"Bytes\" DESC;",
+          "rawSql": "SELECT\n  direction AS \"Direction\",\n  interface AS \"Interface index\",\n  SUM(bytes) AS \"Bytes\",\n  SUM(packets) AS \"Packets\",\n  COUNT(*) AS \"Flow records\"\nFROM (\n  SELECT\n    'Ingress' AS direction,\n    COALESCE(raw_data->>'in_if', 'Unknown') AS interface,\n    COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0) AS bytes,\n    COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0) AS packets\n  FROM public.ipfix_flows\n  WHERE $__timeFilter(created_at)\n    AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n    AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n    AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\n  UNION ALL\n  SELECT\n    'Egress' AS direction,\n    COALESCE(raw_data->>'out_if', 'Unknown') AS interface,\n    COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0) AS bytes,\n    COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0) AS packets\n  FROM public.ipfix_flows\n  WHERE $__timeFilter(created_at)\n    AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n    AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n    AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\n) interface_traffic\nGROUP BY direction, interface\nORDER BY \"Bytes\" DESC\nLIMIT 50;",
           "refId": "A"
         }
       ],
@@ -213,7 +619,7 @@
     },
     {
       "id": 4,
-      "title": "Top Conversations",
+      "title": "Top conversations",
       "type": "table",
       "datasource": {
         "type": "postgres",
@@ -221,7 +627,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 17,
+        "y": 21,
         "w": 12,
         "h": 10
       },
@@ -231,7 +637,20 @@
           "unit": "short",
           "mappings": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Bytes"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          }
+        ]
       },
       "targets": [
         {
@@ -242,7 +661,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  COALESCE(raw_data->>'src_addr', 'Unknown') AS \"Source IP\",\n  COALESCE(raw_data->>'dst_addr', 'Unknown') AS \"Destination IP\",\n  COALESCE(raw_data->>'proto', 'Unknown') AS \"Protocol\",\n  COUNT(*) AS \"Flow Records\",\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS \"Bytes\",\n  SUM(COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0)) AS \"Packets\"\nFROM public.ipfix_flows\nWHERE cluster_id = 'bng-1'\n  AND source_topic = 'ipfix-bng-1'\n  AND $__timeFilter(created_at)\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1, 2, 3\nORDER BY \"Bytes\" DESC\nLIMIT 15;",
+          "rawSql": "SELECT\n  COALESCE(raw_data->>'src_addr', 'Unknown') AS \"Source IP\",\n  COALESCE(raw_data->>'dst_addr', 'Unknown') AS \"Destination IP\",\n  COALESCE(raw_data->>'proto', 'Unknown') AS \"Protocol\",\n  COUNT(*) AS \"Flow records\",\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS \"Bytes\",\n  SUM(COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0)) AS \"Packets\"\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1, 2, 3\nORDER BY \"Bytes\" DESC\nLIMIT 15;",
           "refId": "A"
         }
       ],
@@ -267,7 +686,7 @@
     },
     {
       "id": 5,
-      "title": "Top Source / Destination Network Prefixes",
+      "title": "Top source / destination prefixes",
       "type": "table",
       "datasource": {
         "type": "postgres",
@@ -275,7 +694,7 @@
       },
       "gridPos": {
         "x": 12,
-        "y": 17,
+        "y": 21,
         "w": 12,
         "h": 10
       },
@@ -285,7 +704,20 @@
           "unit": "short",
           "mappings": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Bytes"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          }
+        ]
       },
       "targets": [
         {
@@ -296,7 +728,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  COALESCE(raw_data->>'src_net', 'Unknown') AS \"Source Prefix\",\n  COALESCE(raw_data->>'dst_net', 'Unknown') AS \"Destination Prefix\",\n  COUNT(*) AS \"Flow Records\",\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS \"Bytes\"\nFROM public.ipfix_flows\nWHERE cluster_id = 'bng-1'\n  AND source_topic = 'ipfix-bng-1'\n  AND $__timeFilter(created_at)\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1, 2\nORDER BY \"Bytes\" DESC\nLIMIT 15;",
+          "rawSql": "SELECT\n  COALESCE(raw_data->>'src_net', 'Unknown') AS \"Source prefix\",\n  COALESCE(raw_data->>'dst_net', 'Unknown') AS \"Destination prefix\",\n  COUNT(*) AS \"Flow records\",\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS \"Bytes\"\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\nGROUP BY 1, 2\nORDER BY \"Bytes\" DESC\nLIMIT 15;",
           "refId": "A"
         }
       ],
@@ -321,7 +753,7 @@
     },
     {
       "id": 6,
-      "title": "Top Application Ports",
+      "title": "Top ports (TCP / UDP / SCTP)",
       "type": "table",
       "datasource": {
         "type": "postgres",
@@ -329,7 +761,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 27,
+        "y": 31,
         "w": 24,
         "h": 9
       },
@@ -339,7 +771,20 @@
           "unit": "short",
           "mappings": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Bytes"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          }
+        ]
       },
       "targets": [
         {
@@ -350,7 +795,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  COALESCE(raw_data->>'proto', 'Unknown') AS \"Protocol\",\n  COALESCE(raw_data->>'src_port', 'Unknown') AS \"Source Port\",\n  COALESCE(raw_data->>'dst_port', 'Unknown') AS \"Destination Port\",\n  COUNT(*) AS \"Flow Records\",\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS \"Bytes\",\n  SUM(COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0)) AS \"Packets\"\nFROM public.ipfix_flows\nWHERE cluster_id = 'bng-1'\n  AND source_topic = 'ipfix-bng-1'\n  AND $__timeFilter(created_at)\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\n  AND UPPER(COALESCE(raw_data->>'proto', '')) IN ('TCP', 'UDP')\n  AND COALESCE(NULLIF(raw_data->>'src_port', '')::integer, 0) > 0\n  AND COALESCE(NULLIF(raw_data->>'dst_port', '')::integer, 0) > 0\nGROUP BY 1, 2, 3\nORDER BY \"Bytes\" DESC\nLIMIT 15;",
+          "rawSql": "SELECT\n  COALESCE(raw_data->>'proto', 'Unknown') AS \"Protocol\",\n  COALESCE(raw_data->>'src_port', '0') AS \"Source port\",\n  COALESCE(raw_data->>'dst_port', '0') AS \"Destination port\",\n  COUNT(*) AS \"Flow records\",\n  SUM(COALESCE(NULLIF(raw_data->>'bytes', '')::numeric, 0)) AS \"Bytes\",\n  SUM(COALESCE(NULLIF(raw_data->>'packets', '')::numeric, 0)) AS \"Packets\"\nFROM public.ipfix_flows\nWHERE $__timeFilter(created_at)\n  AND ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring}))\n  AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring}))\n  AND ('${device:raw}' = '__all' OR device IN (${device:sqlstring}))\n  AND UPPER(COALESCE(raw_data->>'proto', '')) IN ('TCP', 'UDP', 'SCTP')\nGROUP BY 1, 2, 3\nORDER BY \"Bytes\" DESC\nLIMIT 25;",
           "refId": "A"
         }
       ],
@@ -379,8 +824,8 @@
   "schemaVersion": 42,
   "tags": [
     "IPFIX",
-    "Cflowd",
-    "BNG",
+    "cflowd",
+    "Nokia",
     "NetOpsKube"
   ],
   "templating": {
@@ -392,33 +837,80 @@
           "text": "All",
           "value": "__all"
         },
-        "definition": "SELECT DISTINCT device FROM public.ipfix_flows WHERE cluster_id = 'bng-1' AND source_topic = 'ipfix-bng-1' ORDER BY device",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Device",
-        "multi": true,
-        "name": "device",
-        "options": [],
-        "query": "SELECT DISTINCT device FROM public.ipfix_flows WHERE cluster_id = 'bng-1' AND source_topic = 'ipfix-bng-1' ORDER BY device",
-        "refresh": 1,
-        "regex": "",
-        "type": "query",
         "datasource": {
           "type": "postgres",
           "uid": "DS_IPFIX_POSTGRES"
         },
-        "sort": 1
+        "definition": "SELECT DISTINCT cluster_id FROM public.ipfix_flows ORDER BY cluster_id",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Cluster",
+        "multi": true,
+        "name": "cluster_id",
+        "options": [],
+        "query": "SELECT DISTINCT cluster_id FROM public.ipfix_flows ORDER BY cluster_id",
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "__all",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "__all"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "DS_IPFIX_POSTGRES"
+        },
+        "definition": "SELECT DISTINCT source_topic FROM public.ipfix_flows WHERE ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring})) ORDER BY source_topic",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Kafka topic",
+        "multi": true,
+        "name": "source_topic",
+        "options": [],
+        "query": "SELECT DISTINCT source_topic FROM public.ipfix_flows WHERE ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring})) ORDER BY source_topic",
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "__all",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "__all"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "DS_IPFIX_POSTGRES"
+        },
+        "definition": "SELECT DISTINCT device FROM public.ipfix_flows WHERE ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring})) AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring})) ORDER BY device",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Exporter (device)",
+        "multi": true,
+        "name": "device",
+        "options": [],
+        "query": "SELECT DISTINCT device FROM public.ipfix_flows WHERE ('${cluster_id:raw}' = '__all' OR cluster_id IN (${cluster_id:sqlstring})) AND ('${source_topic:raw}' = '__all' OR source_topic IN (${source_topic:sqlstring})) ORDER BY device",
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "IPFIX Traffic Overview",
-  "uid": "bng-ipfix-flow",
-  "version": 2,
-  "description": "Basic BNG IPFIX traffic overview. Fixed cluster_id=bng-1 and source_topic=ipfix-bng-1; select one or more exporting devices using the Device variable. Time-series panels use created_at (record ingestion time)."
+  "title": "IPFIX traffic overview",
+  "uid": "ipfix-traffic-overview",
+  "version": 1
 }
