@@ -1,0 +1,12 @@
+apiVersion: operator.gnmic.dev/v1alpha1
+kind: TargetProfile
+metadata:
+  namespace: nok-cgnat
+  name: default-profile
+spec:
+  # Reference to a Secret containing username/password
+  credentialsRef: device-credentials
+  # Omit tls so gNMIc dials insecure (matches SR OS allow-unsecure-connection)
+  encoding: JSON
+  timeout: 10s
+  retryTimer: 2s
